@@ -20,6 +20,8 @@ class MarkdownCleaner:
 
         markdown = self.remove_form_feed(markdown)
         
+        markdown = self.remove_fake_tables(markdown)
+
         markdown = self.mark_pages(markdown)
 
         markdown = self.remove_page_headers(markdown)
@@ -33,6 +35,32 @@ class MarkdownCleaner:
         markdown = self.normalize_spacing(markdown)
 
         return markdown.strip()
+
+    def remove_fake_tables(self, text: str) -> str:
+        """
+        Detecta y aplana tablas de markdown que fragmentan el texto.
+        """
+        lines = text.split('\n')
+        new_lines = []
+        
+        for line in lines:
+            stripped = line.strip()
+            # Si es una línea de separador de tabla |---|---|, la ignoramos
+            if re.match(r'^\|(?:\s*[:-]+\s*\|)+\s*$', stripped):
+                continue
+            
+            # Si es una línea de tabla | celda | celda |
+            if stripped.startswith('|') and stripped.endswith('|'):
+                # Extraer contenido de las celdas
+                cells = stripped.split('|')
+                # Limpiar y unir contenido no vacío
+                content = " ".join(c.strip() for c in cells if c.strip())
+                if content:
+                    new_lines.append(content)
+            else:
+                new_lines.append(line)
+                
+        return "\n".join(new_lines)
 
     def remove_form_feed(self, text: str) -> str:
         """

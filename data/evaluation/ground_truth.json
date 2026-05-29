@@ -1,0 +1,92 @@
+[
+  {
+    "id": "Q1",
+    "document": "fds_91.pdf",
+    "section": "4",
+    "question": "¿Qué se debe hacer en caso de contacto del producto con los ojos según la FDS 91?",
+    "expected_answer": "Enjuagar los ojos con abundante agua al menos durante 15 minutos. Si el accidentado usa lentes de contacto, retirarlas si no están pegadas. Acudir al médico lo más rápidamente posible con la FDS del producto.",
+    "source_fragment": "Enjuagar los ojos con abundante agua al menos durante 15 minutos... acudir al médico lo más rápidamente posible con la FDS del producto.",
+    "expected_page": 2
+  },
+  {
+    "id": "Q2",
+    "document": "fds_91.pdf",
+    "section": "1.3",
+    "question": "¿Cuál es el número de teléfono para emergencias de CORLANC S.A.S.?",
+    "expected_answer": "El número de teléfono para emergencias es CISTEMA - ARL SURA 018000511414 - 0314055911.",
+    "source_fragment": "Número de teléfono para emergencias: CISTEMA - ARL SURA 018000511414 - 0314055911",
+    "expected_page": 1
+  },
+  {
+    "id": "Q3",
+    "document": "fds_31.pdf",
+    "section": "2",
+    "question": "¿Cuáles son las indicaciones de peligro (H) asociadas al RECUBRIMIENTO ANTIGRAFFITI?",
+    "expected_answer": "Carc. 1B: H350 (Puede provocar cáncer), Irrit. oc. 2: H319 (Provoca irritación ocular grave), Liq. Infl. 3: H226 (Líquido y vapores inflamables), Muta. 1B: H340 (Puede provocar defectos genéticos), Sens. Cut. 1: H317 (Puede provocar una reacción cutánea alérgica), Tox. Agud. 5: H313 (Puede ser nocivo en contacto con la piel), Tox. Asp. 1: H304 (Puede ser mortal en caso de ingestión y de penetración en las vías respiratorias).",
+    "source_fragment": "Carc. 1B: H350 - Puede provocar cáncer\nIrrit. oc. 2: H319 - Provoca irritación ocular grave\nLiq. Infl. 3: H226 - Líquido y vapores inflamables\nMuta. 1B: H340 - Puede provocar defectos genéticos\nSens. Cut. 1: H317 - Puede provocar una reacción cutánea alérgica\nTox. Agud. 5: H313 - Puede ser nocivo en contacto con la piel\nTox. Asp. 1: H304 - Puede ser mortal en caso de ingestión y de penetración en las vías respiratorias",
+    "expected_page": 1
+  },
+  {
+    "id": "Q4",
+    "document": "fds_31.pdf",
+    "section": "7.2",
+    "question": "¿Cuáles son las temperaturas mínima y máxima recomendadas para el almacenamiento seguro del RECUBRIMIENTO ANTIGRAFFITI?",
+    "expected_answer": "La temperatura mínima es de 5 ºC y la máxima es de 30 ºC.",
+    "source_fragment": "Tª mínima: 5 ºC\nTª máxima: 30 ºC",
+    "expected_page": 4
+  },
+  {
+    "id": "Q5",
+    "document": "fds_92.pdf",
+    "section": "3.2",
+    "question": "¿Qué concentración de Dióxido de titanio contiene la PINTURA COOLGUARD?",
+    "expected_answer": "La concentración de Dióxido de titanio (diámetro aerodinámico ≤ 10 μm) es de 20 - <30%.",
+    "source_fragment": "Dioxido de titanio (diámetro aerodinámico ≤ 10 μm)\nCAS: 13463-67-7 20 - <30%",
+    "expected_page": 1
+  },
+  {
+    "id": "Q6",
+    "document": "fds_92.pdf",
+    "section": "5.1",
+    "question": "¿Qué tipo de extintor se recomienda para la PINTURA COOLGUARD en caso de incendio?",
+    "expected_answer": "Se recomienda emplear preferentemente extintores de polvo polivalente (polvo ABC).",
+    "source_fragment": "En caso de inflamación como consecuencia de manipulación, almacenamiento o uso indebido emplear preferentemente extintores de polvo polivalente (polvo ABC).",
+    "expected_page": 2
+  },
+  {
+    "id": "Q7",
+    "document": "fds_44.pdf",
+    "section": "2.1",
+    "question": "¿Cuál es la clasificación NFPA para la Salud e Inflamabilidad del producto TEXTUCO?",
+    "expected_answer": "La clasificación NFPA es Salud: 1 e Inflamabilidad: 0.",
+    "source_fragment": "NFPA:\nSalud: 1\nInflamabilidad: 0",
+    "expected_page": 1
+  },
+  {
+    "id": "Q8",
+    "document": "fds_44.pdf",
+    "section": "4.1",
+    "question": "¿Qué se recomienda hacer en caso de contacto del TEXTUCO con la piel si se producen alteraciones?",
+    "expected_answer": "Se recomienda limpiar la zona afectada con agua por arrastre y jabón neutro. En caso de alteraciones (escozor, rojez, sarpullidos, ampollas…), acudir a consulta médica con la FDS.",
+    "source_fragment": "En caso de contacto se recomienda limpiar la zona afecta con agua por arrastre y con jabón neutro. En caso de alteraciones en la piel (escozor, rojez, sarpullidos, ampollas…), acudir a consulta médica con esta Ficha de Datos de Seguridad",
+    "expected_page": 2
+  },
+  {
+    "id": "Q9",
+    "document": "fds_88.pdf",
+    "section": "1.2",
+    "question": "¿Cuál es el uso recomendado para la PINTURA LAVABLE?",
+    "expected_answer": "El uso recomendado es pintura decorativa.",
+    "source_fragment": "Usos pertinentes: Pintura decorativa",
+    "expected_page": 1
+  },
+  {
+    "id": "Q10",
+    "document": "fds_91.pdf",
+    "section": "3.2",
+    "question": "¿Cuál es el Factor M agudo y crónico para el Piritionato cincico según la FDS 91?",
+    "expected_answer": "El Factor M agudo es 1000 y el Factor M crónico es 10.",
+    "source_fragment": "Piritionato cincico\nCAS: 13463-41-7\nAgudo 1000\nCrónico 10",
+    "expected_page": 2
+  }
+]
