@@ -431,63 +431,7 @@ El sistema implementa trazabilidad en cuatro capas complementarias:
 El system prompt instruye al LLM a citar explícitamente estas referencias en su respuesta.
 
 ---
-
-## 8. EVALUACIÓN DEL SISTEMA RAG
-
-### 8.1 Tabla de Ground Truth (Ejemplos)
-
-| # | Pregunta | Respuesta esperada | Sección fuente | Chunk fuente |
-|---|---|---|---|---|
-| 1 | ¿Cuál es el nombre del fabricante y cómo contactarlo? | CORLAC S.A.S., Carrera 48 N°72 sur 01, Sabaneta-Antioquia, Tel: +57-4-3787800, materialespinturascorona@corona.com.co | Sección 1 | 1_0 |
-| 2 | ¿Qué número de emergencia tiene el producto? | CISTEMA - ARL SURA 018000511414 - 0314055911 | Sección 1 | 1_0 |
-| 3 | ¿Cuál es la clasificación SGA del producto? | Acuático agudo 1 (H400), Acuático crónico 3 (H412), Carc. 2 (H351) | Sección 2 | 2_0 |
-| 4 | ¿Cuáles son los componentes peligrosos y sus concentraciones? | Dióxido de titanio CAS 13463-67-7 (10-<20%); Piritionato cíncico CAS 13463-41-7 (<5%) | Sección 3 | 3_0 |
-| 5 | ¿Qué indicaciones H tiene el Piritionato cíncico? | H400, H410, H318, H360, H372, H330, H301 | Sección 3 | 3_0 |
-| 6 | ¿Qué hacer en caso de ingestión del producto? | Consultar inmediatamente a un médico. No inducir el vómito. Mostrar este documento al personal médico. | Sección 4 | 4_0 |
-| 7 | ¿Qué EPP ocular se recomienda para manipular el producto? | Gafas protectoras o pantalla facial según la Sección 8 de controles de exposición. | Sección 8 | 8_0 |
-| 8 | ¿Cuál es el estado físico del producto a 20°C? | Líquido, en forma de dispersión, color blanco | Sección 9 | 9_0 |
-| 9 | ¿Cuál es la temperatura de ebullición del producto? | Mayor a 100 °C a presión atmosférica | Sección 9 | 9_1 |
-| 10 | ¿Es el producto estable en condiciones normales de almacenamiento? | Sí, el producto es estable. Deben evitarse fuentes de calor extremas y materiales incompatibles. | Sección 10 | 10_0 |
-| 11 | ¿Cuáles son los efectos toxicológicos del Dióxido de titanio? | Posible carcinógeno por inhalación (IARC Grupo 2B), categoría Carc. 2 bajo SGA. | Sección 11 | 11_0 |
-| 12 | ¿Cuál es el factor M acuático del Piritionato cíncico? | Factor M Agudo: 1000; Factor M Crónico: 10 | Sección 3 / 12 | 3_0 / 12_0 |
-| 13 | ¿Cómo debe eliminarse el envase vacío del producto? | Mediante el sistema de recogida selectiva habilitado en el municipio, según consejos de prudencia P501 | Sección 13 | 13_0 |
-| 14 | ¿Bajo qué normativa colombiana se clasifica este producto? | Decreto 1496 de 2018 y Resolución 773 de 2021, que adoptan el Sistema GHS en Colombia | Sección 1 / 15 | 1_0 / 15_0 |
-| 15 | ¿Cuáles son las condiciones de almacenamiento recomendadas? | Almacenar en lugar fresco y ventilado, alejado de fuentes de calor e ignición, en envase original cerrado | Sección 7 | 7_0 |
-
-### 8.2 Métricas Propuestas
-
-**Exactitud Semántica (Semantic Accuracy):** Comparación entre la respuesta del RAG y la respuesta de referencia usando similitud coseno de embeddings (mismo modelo `all-MiniLM-L6-v2`). Umbral de aceptación: similitud ≥ 0.75.
-
-**Relevancia Contextual (Context Relevance):** Para cada chunk recuperado, medir si la sección recuperada coincide con la sección fuente del ground truth. Métrica: Precision@k sobre secciones.
-
-**Faithfulness (Fidelidad):** Verificar que cada afirmación de la respuesta esté sustentada en al menos uno de los chunks recuperados. Puede evaluarse manualmente o con un LLM evaluador. Escala 0-1 por respuesta.
-
-**Trazabilidad:** Verificar que la respuesta cite explícitamente el archivo, la página y la sección. Métrica binaria (0/1) por respuesta: ¿contiene referencias de fuente?
-
-**Tasa de Alucinación:** Porcentaje de respuestas que contienen información no presente en ninguno de los chunks recuperados. Evaluación manual o con modelo evaluador.
-
-### 8.3 Metodología de Evaluación
-
-1. Ejecutar el sistema RAG con cada una de las 15 preguntas del ground truth.
-2. Para cada respuesta calcular las 5 métricas definidas.
-3. Comparar respuesta generada vs. respuesta esperada cualitativamente.
-4. Documentar casos de alucinación identificados y analizar si el chunk fuente correcto fue recuperado.
-
-### 8.4 Análisis Crítico y Posibles Alucinaciones
-
-El principal riesgo de alucinación en este sistema proviene de tres escenarios:
-
-**Escenario 1 — Chunks recuperados incorrectos:** Si el retriever híbrido no recupera el chunk con la información correcta (falso negativo del retriever), el LLM puede generar una respuesta plausible pero incorrecta basada en chunks de secciones relacionadas pero no exactas.
-
-**Escenario 2 — Ambigüedad de secciones duplicadas:** La paginación del PDF genera duplicación de algunos encabezados de sección en el Markdown (ej: "SECCIÓN 3" aparece dos veces). Esto crea chunks redundantes que pueden fragmentar o repetir información, llevando a respuestas inconsistentes.
-
-**Escenario 3 — Preguntas fuera del dominio:** El system prompt instruye al LLM a indicar cuando no tiene información, pero modelos como phi3 tienen tendencia a generar respuestas coherentes aunque no estén completamente respaldadas por el contexto.
-
-**Mitigación implementada:** El system prompt incluye la instrucción explícita *"Si la información no está en el contexto, di que no lo sabes. No inventes."* y *"Cita siempre la fuente, la página y la sección"*. La presencia de citas en la respuesta es un indicador directo de que el LLM usó el contexto y no generó información libre.
-
----
-
-## 9. LIMITACIONES DEL SISTEMA
+## 8. LIMITACIONES DEL SISTEMA
 
 | Limitación | Severidad | Descripción |
 |---|---|---|
@@ -570,5 +514,3 @@ Las principales limitaciones identificadas son la ausencia de OCR para páginas 
 El sistema RAG implementado cumple todos los requerimientos técnicos mínimos de la asignación: pipeline de extracción PDF→Markdown, preservación de las 16 secciones normativas GHS, chunking documentado con trazabilidad, RAG funcional con LLM local, y zero dependencia de APIs externas o servicios de pago. La arquitectura modular facilita la extensión y el mantenimiento. La combinación de búsqueda semántica y BM25 representa una decisión técnica sólida para el dominio de documentos técnicos regulatorios con vocabulario altamente específico. El sistema demuestra que es posible construir soluciones de NLP aplicadas de alto valor con herramientas completamente open source y costo computacional mínimo.
 
 ---
-
-*Documento generado a partir del análisis del repositorio `rag_fds-main`. Todos los componentes descritos corresponden a archivos y funciones reales del proyecto.*
