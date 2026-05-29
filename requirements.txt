@@ -1,0 +1,7 @@
+pymupdf
+markitdown
+sentence-transformers
+faiss-cpu
+rank-bm25
+ollama
+numpy
